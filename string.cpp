@@ -48,9 +48,20 @@ struct SimpleString {
     копирования по умолчанию
     delete - здесь запрещает копирование
      */
+
+    //конструктор перемещения
+    SimpleString (SimpleString&& other) noexcept
+    : max_size{other.max_size},
+    buffer(other.buffer),
+    length(other.length){
+        other.length = 0;
+        other.buffer = nullptr;
+        other.max_size = 0;
+    }
     
-    /*SimpleString& operator=(SimpleString&& other) noexcept{
-        if (this == &other) return *this;
+    //оператор присваивания перемещения
+    SimpleString& operator=(SimpleString&& other) noexcept{
+        if (thid == &other) return *this;
         delete[] buffer;
         buffer = other.buffer;
         length = other.length;
@@ -59,7 +70,7 @@ struct SimpleString {
         other.length = 0;
         other.max_size = 0;
         return *this;
-    }*/
+    }
 
     void print(const char* tag) const {
         printf("%s: %s", tag, buffer);
