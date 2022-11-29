@@ -61,7 +61,7 @@ struct SimpleString {
     
     //оператор присваивания перемещения
     SimpleString& operator=(SimpleString&& other) noexcept{
-        if (thid == &other) return *this;
+        if (this == &other) return *this;
         delete[] buffer;
         buffer = other.buffer;
         length = other.length;
@@ -93,5 +93,21 @@ private:
 // RAII - получение ресурса есть инициализация
 
 int main(){
-
+    SimpleString a{50}; // конструктор
+    a.append_line("adfasdf");
+    a.print("a");
+    SimpleString b{a}; // конструктор копирования
+    b.print("b");
+    SimpleString c = a; // оператор присваивания копии
+    c.print("c");
+    SimpleString d{std::move(a)};
+    // После присваивания переноса a находится 
+    // в перенесенном состоянии иего нельзя использовать, 
+    // если не переопределить его новым значением.
+    d.print("d");
+    SimpleString e = std::move(b);
+    e.print("e");
+    a.print("a");
+    printf("%s", "\n");
+    b.print("b");
 }
