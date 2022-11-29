@@ -100,12 +100,12 @@ int main(){
     b.print("b");
     SimpleString c = a; // оператор присваивания копии
     c.print("c");
-    SimpleString d{std::move(a)};
+    SimpleString d{std::move(a)}; // конструктор перемещения
     // После присваивания переноса a находится 
     // в перенесенном состоянии иего нельзя использовать, 
     // если не переопределить его новым значением.
     d.print("d");
-    SimpleString e = std::move(b);
+    SimpleString e = std::move(b); // оператор присваивания перемещения
     e.print("e");
     a.print("a");
     printf("%s", "\n");
